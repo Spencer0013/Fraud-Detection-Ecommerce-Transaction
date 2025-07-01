@@ -205,3 +205,8 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+artifacts/*
+!artifacts/model_evaluation/
+!artifacts/model_evaluation/evaluation_results.json
+Data/*
+!Data/EDA.ipynb

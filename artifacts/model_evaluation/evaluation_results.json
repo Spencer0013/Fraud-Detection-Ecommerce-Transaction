@@ -1,0 +1,26 @@
+{
+    "validation_accuracy": 0.9554942275901165,
+    "validation_confusion_matrix": [
+        [
+            279217,
+            606
+        ],
+        [
+            12505,
+            2263
+        ]
+    ],
+    "validation_roc_auc": 0.8115895030082261,
+    "class_0_metrics": {
+        "precision": 0.9571338466073864,
+        "recall": 0.9978343452825537,
+        "f1_score": 0.9770604239386225,
+        "support": 279823.0
+    },
+    "class_1_metrics": {
+        "precision": 0.7887765772046009,
+        "recall": 0.15323672806067173,
+        "f1_score": 0.2566196065090435,
+        "support": 14768.0
+    }
+}
