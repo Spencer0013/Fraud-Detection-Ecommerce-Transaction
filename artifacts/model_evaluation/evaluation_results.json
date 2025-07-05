@@ -1,26 +1,26 @@
 {
-    "validation_accuracy": 0.9554942275901165,
+    "validation_accuracy": 0.9554704658322896,
     "validation_confusion_matrix": [
         [
-            279217,
-            606
+            279307,
+            516
         ],
         [
-            12505,
-            2263
+            12602,
+            2166
         ]
     ],
-    "validation_roc_auc": 0.8115895030082261,
+    "validation_roc_auc": 0.8112319856619702,
     "class_0_metrics": {
-        "precision": 0.9571338466073864,
-        "recall": 0.9978343452825537,
-        "f1_score": 0.9770604239386225,
+        "precision": 0.9568290117810687,
+        "recall": 0.9981559771712832,
+        "f1_score": 0.9770556834320976,
         "support": 279823.0
     },
     "class_1_metrics": {
-        "precision": 0.7887765772046009,
-        "recall": 0.15323672806067173,
-        "f1_score": 0.2566196065090435,
+        "precision": 0.8076062639821029,
+        "recall": 0.14666847237269773,
+        "f1_score": 0.24825214899713466,
         "support": 14768.0
     }
 }

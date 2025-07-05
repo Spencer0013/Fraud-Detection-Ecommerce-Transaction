@@ -57,7 +57,7 @@ class ModelTuner:
             n_iter=10,
             cv=cv,
             n_jobs=-1,
-            verbose=2,
+            verbose=1,
             random_state=42,
         )
 
