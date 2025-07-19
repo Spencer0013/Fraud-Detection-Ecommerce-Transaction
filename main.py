@@ -1,5 +1,5 @@
 import sys
-sys.path.append("src")  # 👈 Add this as the first import
+sys.path.append("src") 
 
 
 # from fraud_detection.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
