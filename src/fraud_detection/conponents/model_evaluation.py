@@ -72,7 +72,7 @@ class ModelEvaluator:
         print("=== Classification Report (All Classes) ===")
         print(classification_report(y_val, y_val_pred))
 
-        print("=== Confusion Matrix ===")
+        print("Confusion Matrix")
         print(conf_matrix)
 
         print("=== Fraud Class (Label = 1) Metrics ===")
