@@ -24,7 +24,7 @@ class ModelTrainer:
     def train(self):
         # Get train/val/test splits from data transformer
         (
-            X_train,   # after preprocessing and SMOTE will be applied here
+            X_train,   
             X_val,
             X_test,
             y_train,
