@@ -16,13 +16,12 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 
-# Placeholder utility functions (ensure you have these implemented elsewhere)
+# Placeholder utility function
 def load_and_clean_data(file_path):
     # Implement actual data loading and cleaning
     return pd.read_csv(file_path, low_memory=False)
 
 def save_object(file_path, obj):
-    # Implement object serialization (e.g., using joblib or pickle)
     pass
 
 
@@ -43,7 +42,7 @@ class DataTransformation:
       Returns:
       - ColumnTransformer: A scikit-learn transformer for preprocessing.
       """
-      # Drop the target column if present
+      # Drop the target column 
       df = df.drop(columns=["Is Fraudulent"], errors="ignore")
 
       # Identify numerical and categorical columns
