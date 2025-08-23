@@ -110,16 +110,7 @@ Review predictions in the browser.
 
 Download results with predictions included.
 
-Tech Stack
 
-Python (pandas, numpy, scikit-learn, imbalanced-learn)
-
-Gradient boosting frameworks (LightGBM, XGBoost, CatBoost)
-
-Streamlit (web interface)
-
-Kubernetes (deployment)
-
-Summary
+## Summary
 
 This project demonstrates a complete machine learning workflow for fraud detection in e-commerce. It combines data processing, feature engineering, model selection, tuning, evaluation, and deployment into a reproducible system. The resulting model achieves high accuracy and recall, making it a strong candidate for real-world fraud detection scenarios.
