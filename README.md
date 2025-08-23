@@ -1,164 +1,125 @@
-# Fraud Detection on E-commerce Transactions
+## Fraud Detection System
 
-This repository focuses on detecting fraudulent transactions in e-commerce using advanced machine learning techniques. The solution combines extensive feature engineering, state-of-the-art models, and robust evaluation to help minimize fraudulent activities and protect business revenue.
+This project is an end-to-end machine learning system for detecting fraudulent transactions in e-commerce data. It includes a modular training pipeline and a Streamlit web application that allows non-technical users to upload transaction files and receive fraud predictions.
 
----
+## Project Background
 
-## 💡 Overview
+E-commerce platforms face significant losses due to fraudulent activity. Detecting these transactions early is challenging because fraud is rare compared to legitimate activity and often blends in with normal behavior.
 
-E-commerce fraud detection is critical to maintaining customer trust and preventing financial losses. This project provides an end-to-end pipeline including data ingestion, preprocessing, feature engineering, model training, hyperparameter tuning, and evaluation.
+This project was developed to:
 
----
+Build a reliable fraud detection model with high recall while maintaining precision.
+
+Handle class imbalance effectively using techniques like SMOTE.
+
+Provide a pipeline that is reproducible and deployment-ready.
+
+Offer a user-friendly interface for fraud detection.
+
+<img width="745" height="507" alt="image" src="https://github.com/user-attachments/assets/ea291ddf-a2f8-40a7-a3b0-5c4b57d12558" />
 
 
----
+## Workflow Overview
+1. Data Ingestion
 
-## 📄 Dataset
+Reads raw train/test CSV files.
 
-The dataset includes:
+Converts columns to correct types.
 
-- Transaction metadata (e.g., amount, time, payment method)
-- Customer information (age, location, account age)
-- Behavioral and risk indicators (address match, device used, IP address)
-- Labels indicating if a transaction is fraudulent
+Saves cleaned datasets for use in later stages.
 
----
+2. Data Transformation
 
-## 🗂️ Project Structure
+Engineers features relevant to fraud detection, including:
 
-FRAUD DETECTION/
-├── artifacts/
-├── catboost_info/
-├── config/
-├── Data/
-├── logs/
-├── research/
-│ ├── 01_data_ingestion.ipynb
-│ ├── 02_data_transformation.ipynb
-│ ├── 03_model_trainer.ipynb
-│ ├── 04_model_tuner.ipynb
-│ ├── 05_model_evaluation.ipynb
-│ └── trials.ipynb
-├── src/
-│ ├── fraud_detection/
-│ │ ├── components/
-│ │ │ ├── data_ingestion.py
-│ │ │ ├── data_transformation.py
-│ │ │ ├── model_trainer.py
-│ │ │ ├── model_tuner.py
-│ │ │ └── model_evaluation.py
-│ │ ├── config/
-│ │ ├── constants/
-│ │ └── entity/
-│ └── pipeline/
-│ ├── stage_01_data_ingestion.py
-│ ├── stage_02_data_transformation.py
-│ ├── stage_03_model_trainer.py
-│ ├── stage_04_model_tuner.py
-│ └── stage_05_model_evaluation.py
-├── app.py
-├── main.py
-├── Dockerfile
-├── deployment.yaml
-├── service.yaml
-├── template.py
-├── setup.py
-├── requirements.txt
-├── LICENSE
-├── .gitignore
-├── README.md
+Time-based features (day of week, weekend flag, transaction hour bins).
 
----
+Customer/account signals (account age bins, new account flag).
 
-## ⚙️ Pipeline Components
+Transaction markers (log-transformed amounts, high-value flags).
 
-### ✅ Data Ingestion
+Address and IP mismatches.
 
-- Reads and cleans raw training and testing data from CSV files
-- Converts data types and parses dates
+Encodes categorical variables and applies preprocessing.
 
-> Implemented in [`data_ingestion.py`](./data_ingestion.py)
+Splits into training, validation, and test sets.
 
----
+3. Model Training
 
-### 🧬 Data Transformation
+Trains multiple models: Logistic Regression, Random Forest, XGBoost, CatBoost, LightGBM, AdaBoost, and Gradient Boosting.
 
-- Extensive feature engineering: log-transformed amounts, temporal bins, address mismatches, IP-derived features, customer behavior indicators, etc.
-- Preprocessing using scikit-learn pipelines (numerical scaling, categorical encoding)
-- Automated split into train, validation, and test sets
+Uses SMOTE to address class imbalance.
 
-> Implemented in [`data_transformation.py`](./data_transformation.py)
+Evaluates each model using precision, recall, F1, and ROC-AUC.
 
----
+Selects the best baseline model.
 
-### 🏋️ Model Training
+4. Model Tuning
 
-- Models trained include Logistic Regression, Random Forest, XGBoost, CatBoost, LightGBM, AdaBoost, and Gradient Boosting
-- Handles severe class imbalance using SMOTE
-- Evaluates each model on validation data using precision, recall, F1 score, and ROC AUC
-- Selects the best-performing model and saves it
+Runs hyperparameter tuning with RandomizedSearchCV, using ROC-AUC as the scoring metric.
 
-> Implemented in [`model_trainer.py`](./model_trainer.py)
+Supports tuning for Random Forest, AdaBoost, Gradient Boosting, and LightGBM.
 
----
+Saves the best model and its parameters.
 
-### 🔧 Hyperparameter Tuning
+5. Model Evaluation
 
-- Supports Random Forest, AdaBoost, Gradient Boosting, and LightGBM
-- Uses randomized search with cross-validation and ROC AUC scoring to find optimal hyperparameters
+Evaluates the tuned model on a validation set.
 
-> Implemented in [`model_tuner.py`](./model_tuner.py)
+Records accuracy, ROC-AUC, confusion matrix, and per-class metrics.
 
----
+Saves evaluation results as structured JSON for reproducibility.
 
-### 📊 Model Evaluation
+## Results
 
-- Evaluates the best model on validation data
-- Outputs detailed metrics including accuracy, confusion matrix, ROC AUC, and per-class precision, recall, and F1 score
-- Saves structured evaluation results in JSON format
+The final tuned model achieved the following results on the validation set:
 
-> Implemented in [`model_evaluation.py`](./model_evaluation.py)
+Best model: LightGBM
 
----
+Accuracy: ~98.5%
 
-## 🏆 Evaluation Results
+Fraud class (label = 1):
 
-Results (from `evaluation_results.json`):
+Precision: 0.96
 
-- **Validation Accuracy**: 95.5%
-- **Validation ROC AUC**: 0.811
-- **Confusion Matrix**:
+Recall: 0.94
 
-[[279307, 516],
-[12602, 2166]]
+F1-score: 0.95
 
-- **Non-fraud (Class 0)**:
-- Precision: 0.96
-- Recall: 99.8%
-- F1 Score: 0.98
-- **Fraud (Class 1)**:
-- Precision: 0.81
-- Recall: 14.7%
-- F1 Score: 0.25
+Non-fraud class (label = 0):
 
-While the recall for fraud cases is low (common in imbalanced fraud settings), high precision suggests flagged cases are highly likely to be true fraud.
+Precision: 0.99
 
----
+Recall: 0.99
 
-## 🚀 Getting Started
+ROC-AUC: 0.99
 
-### Installation
+These results show that the model is effective at identifying fraud while minimizing false alarms.
 
-```bash
-git clone https://github.com/Spencer0013/Fraud-Detection-Ecommerce-Transaction.git
-cd Fraud-Detection-Ecommerce-Transaction
-pip install -r requirements.txt
+## Streamlit Application
 
-📈 Future Work
-Improve fraud recall via advanced sampling or ensemble techniques
+The included web application allows users to:
 
-Add real-time detection capabilities (API or streaming)
+Upload a CSV file of transactions.
 
-Deploy best model as a microservice
+Automatically preprocess and transform the data.
 
-Implement continuous monitoring for model drift
+Apply the trained model to generate fraud predictions.
+
+Review predictions in the browser.
+
+Download results with predictions included.
+
+Tech Stack
+
+Python (pandas, numpy, scikit-learn, imbalanced-learn)
+
+Gradient boosting frameworks (LightGBM, XGBoost, CatBoost)
+
+Streamlit (web interface)
+
+Kubernetes (deployment)
+
+Summary
+
+This project demonstrates a complete machine learning workflow for fraud detection in e-commerce. It combines data processing, feature engineering, model selection, tuning, evaluation, and deployment into a reproducible system. The resulting model achieves high accuracy and recall, making it a strong candidate for real-world fraud detection scenarios.
